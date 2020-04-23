@@ -43,8 +43,8 @@ public class Logic {
         boolean result = cells.length > 0;
         for (Cell cell : cells) {
             if (this.findBy(cell) != -1) {
-               result = false;
-               break;
+                result = false;
+                break;
             }
         }
         return result;
@@ -71,6 +71,42 @@ public class Logic {
     public boolean isWin() {
         int[][] table = this.convert();
         boolean result = false;
+        System.out.println(Arrays.deepToString(table));
+        if (this.checkVertical(table)
+                || this.checkHorizontal(table)
+        ) {
+            result = true;
+        }
+        return result;
+    }
+
+    public boolean checkVertical(int[][] array) {
+        boolean result = false;
+        for (int i = 0, j = 0; i < array.length; i++) {
+            if (array[i][j] == 1
+                    && array[i][j] == array[i][j + 1]
+                    && array[i][j + 1] == array[i][j + 2]
+                    && array[i][j + 2] == array[i][j + 3]
+                    && array[i][j + 3] == array[i][j + 4]
+            ) {
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    public boolean checkHorizontal(int[][] array) {
+        boolean result = false;
+        for (int i = 0, j = 0; j < array.length; j++) {
+            if (array[i][j] == 1
+                && array[i][j] == array[i + 1][j]
+                && array[i + 1][j] == array[i + 2][j]
+                && array[i + 2][j] == array[i + 3][j]
+                && array[i + 3][j] == array[i + 4][j]
+            ) {
+                result = true;
+            }
+        }
         return result;
     }
 
