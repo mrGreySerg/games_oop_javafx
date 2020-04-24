@@ -71,40 +71,36 @@ public class Logic {
     public boolean isWin() {
         int[][] table = this.convert();
         boolean result = false;
-        System.out.println(Arrays.deepToString(table));
-        if (this.checkVertical(table)
-                || this.checkHorizontal(table)
-        ) {
-            result = true;
+
+        for (int i = 0; i < table.length; i++) {
+            if (table[i][i] == 1
+                    && (monoHorizontal(table, i) || monoVertical(table, i))
+            ) {
+                result = true;
+                break;
+            }
         }
+
         return result;
     }
 
-    public boolean checkVertical(int[][] array) {
-        boolean result = false;
-        for (int i = 0, j = 0; i < array.length; i++) {
-            if (array[i][j] == 1
-                    && array[i][j] == array[i][j + 1]
-                    && array[i][j + 1] == array[i][j + 2]
-                    && array[i][j + 2] == array[i][j + 3]
-                    && array[i][j + 3] == array[i][j + 4]
-            ) {
-                result = true;
+    public static boolean monoVertical(int[][] board, int column) {
+        boolean result = true;
+        for (int i = 0; i < board.length; i++) {
+            if (board[i][column] != 1) {
+                result = false;
+                break;
             }
         }
         return result;
     }
 
-    public boolean checkHorizontal(int[][] array) {
-        boolean result = false;
-        for (int i = 0, j = 0; j < array.length; j++) {
-            if (array[i][j] == 1
-                && array[i][j] == array[i + 1][j]
-                && array[i + 1][j] == array[i + 2][j]
-                && array[i + 2][j] == array[i + 3][j]
-                && array[i + 3][j] == array[i + 4][j]
-            ) {
-                result = true;
+    public static boolean monoHorizontal(int[][] board, int row) {
+        boolean result = true;
+        for (int index = 0; index < board[row].length; index++) {
+            if (board[row][index] != 1) {
+                result = false;
+                break;
             }
         }
         return result;
