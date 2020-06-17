@@ -4,7 +4,6 @@ import ru.job4j.chess.firuges.Cell;
 import ru.job4j.chess.firuges.Figure;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 /**
  * //TODO add comments.
@@ -32,12 +31,8 @@ public class Logic {
                 return rst;
             }
             Cell[] steps = this.figures[index].way(source, dest);
-            for (Cell item : steps) {
-                for (Figure figure : figures) {
-                    if (figure.checkPosition(item)) {
-                        return rst;
-                    }
-                }
+            if (!checkFreeWay(steps)) {
+                return rst;
             }
             if (steps.length > 0 && steps[steps.length - 1].equals(dest)) {
                 rst = true;
@@ -45,6 +40,19 @@ public class Logic {
             }
         }
         return rst;
+    }
+
+    private boolean checkFreeWay(Cell[] cells) {
+        boolean result = true;
+        for (Cell item : cells) {
+            for (Figure figure : this.figures) {
+                if (figure != null && figure.checkPosition(item)) {
+                    result = false;
+                    break;
+                }
+            }
+        }
+        return result;
     }
 
     public void clean() {

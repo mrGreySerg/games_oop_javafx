@@ -25,52 +25,24 @@ public class BishopBlack implements Figure {
         }
         int size = Math.abs(source.x - dest.x);
         Cell[] steps = new Cell[size];
-        int[] deltaXY = check(source, dest);
-        int deltaX = deltaXY[0];
-        int deltaY = deltaXY[1];
+        int deltaX = dest.x > source.x ? 1 : -1;
+        int deltaY = dest.y > source.y ? 1 : -1;
+        int x = source.x + deltaX;
+        int y = source.y + deltaY;
         for (int index = 0; index < size; index++) {
-                int x = source.x + deltaX;
-                int y = source.y + deltaY;
                 steps[index] = Cell.findBy(x, y);
-                deltaX += deltaXY[0];
-                deltaY += deltaXY[1];
+                x += deltaX;
+                y += deltaY;
             }
         return steps;
     }
 
-    private int[] check(Cell source, Cell dest) {
-        int[] deltaXY = new int[2];
-        int deltaX = source.x - dest.x;
-        int deltaY = source.y - dest.y;
-        boolean wayUpRight = deltaX < 0 && deltaY < 0 ? true : false;
-        boolean wayDownLeft = deltaX > 0 && deltaY > 0 ? true : false;
-        boolean wayDownRight = deltaX > 0 && deltaY < 0 ? true : false;
-        boolean wayUpLeft = deltaX < 0 && deltaY > 0 ? true : false;
-        if (wayUpRight) {
-            deltaXY[0] = 1;
-            deltaXY[1] = 1;
-        } else if (wayDownLeft) {
-            deltaXY[0] = -1;
-            deltaXY[1] = -1;
-        } else if (wayDownRight) {
-            deltaXY[0] = -1;
-            deltaXY[1] = 1;
-        } else if (wayUpLeft) {
-            deltaXY[0] = 1;
-            deltaXY[1] = -1;
-        }
-        return deltaXY;
-    }
-
     public boolean isDiagonal(Cell source, Cell dest) {
         boolean checkDiagonal = false;
-        if (source.x - dest.x == source.y - dest.y
-                || Math.abs(source.x - dest.x) == Math.abs(source.y - dest.y)
-                && source.x + source.y == dest.x + dest.y) {
+        if (Math.abs(source.x - dest.x) == Math.abs(source.y - dest.y)) {
             checkDiagonal = true;
         }
         return checkDiagonal;
-
     }
 
     @Override
